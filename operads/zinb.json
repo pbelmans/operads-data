@@ -1,0 +1,10 @@
+{
+  "name": "Zinbiel algebra",
+  "notation": "Zinb",
+
+  "generating series": "\\frac{t}{1-t}",
+
+  "dual": "Leib",
+
+  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ]
+}

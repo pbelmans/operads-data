@@ -1,0 +1,10 @@
+{
+  "name": "Dendriform algebra",
+  "notation": "Dend",
+
+  "generating series": "",
+
+  "dual": "Dias",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul" ]
+}
