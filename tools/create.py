@@ -8,7 +8,7 @@ def execute(filename):
   cursor = connection.cursor()
   cursor.execute(query)
 
-tables = ["operads.sql"]
+tables = ["operad_property.sql", "operads.sql", "properties.sql"]
 indices = "indices.sql"
 
 if os.path.isfile("operads.sqlite"):

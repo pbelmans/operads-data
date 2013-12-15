@@ -1,6 +1,6 @@
 {
   "name": "Lie algebra",
   "notation": "Lie",
-  "generating series": "f^{\mathrm{Lie}}(t)=-\log(1-t)",
-  "properties": { "binary", "quadratic", "koszul" },",
+  "generating series": "\\log(1-t)",
+  "properties": [ "binary", "quadratic", "koszul" ]
 }
