@@ -1,6 +1,23 @@
 {
   "name": "Lie algebra",
   "notation": "Lie",
+
+  "operations":
+    [
+      { "operation": "[x,y]", "name": "bracket" }
+    ],
+  "symmetry": 
+    [
+      { "symmetry": "[x,y]=-[y,x]", "name": "antisymmetry" }
+    ] ,
+  "relation":
+    [
+      { "relation": "[[x,y],z]=[x,[y,z]]+[[x,z],y]", "name": "Leibniz relation" }
+    ],
+
   "generating series": "\\log(1-t)",
+  
+  "dual": "Com",
+
   "properties": [ "binary", "quadratic", "koszul" ]
 }

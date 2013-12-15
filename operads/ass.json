@@ -1,0 +1,11 @@
+{
+  "name": "Associative algebra",
+  "notation": "Ass",
+
+  "generating series": "\\frac{t}{1-t}",
+
+  "dual": "Ass",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul", "set-theoretic" ]
+}
+

@@ -1,0 +1,10 @@
+{
+  "name": "Dissociative algebra",
+  "notation": "Dias",
+
+  "generating series": "\\frac{t}{(1-t)^2}",
+
+  "dual": "Dend",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul", "set-theoretic" ]
+}

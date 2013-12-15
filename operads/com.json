@@ -1,0 +1,10 @@
+{
+  "name": "Commutative algebra",
+  "notation": "Com",
+
+  "generating series": "\\exp(t)-1",
+
+  "dual": "Lie",
+
+  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ]
+}

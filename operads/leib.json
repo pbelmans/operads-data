@@ -1,0 +1,11 @@
+{
+  "name": "Leibniz algebra",
+  "notation": "Leib",
+
+  "generating series": "\\frac{t}{1-t}",
+
+  "dual": "Zinb",
+
+  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ]
+}
+

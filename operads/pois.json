@@ -1,0 +1,11 @@
+{
+  "name": "Poisson algebra",
+  "notation": "Pois",
+
+  "generating series": "\\frac{t}{1-t}",
+
+  "dual": "Pois",
+
+  "properties": [ "binary", "quadratic", "quasi-regular", "koszul" ]
+}
+
