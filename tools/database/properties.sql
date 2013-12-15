@@ -1,0 +1,3 @@
+CREATE TABLE "properties" (
+  "name" VARCHAR PRIMARY KEY NOT NULL
+)

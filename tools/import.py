@@ -1,10 +1,15 @@
 import general
 import json, os, sqlite3
 
+# the list of all fields that correspond to columns in the operads table
+fields = ["dual"]
+
 
 # create an operad in the database
 def createOperad(key, name, notation):
   assert not operadExists(key)
+
+  print "Creating the operad with key ", key
 
   try:
     query = "INSERT INTO operads (key, name, notation) VALUES (?, ?, ?)"
@@ -102,17 +107,35 @@ def updateOperad(key, operad):
     #  print "The operad with key ", key, " already has the property ", name
   # TODO remove properties that no longer exist
 
+  for field in fields:
+    setValue(key, field, operad[field])
+
+# generic code to change a column of an operad
+def setValue(key, field, value):
+  try:
+    query = "UPDATE operads SET " + field + " = ? WHERE key = ?"
+    result = connection.execute(query, [value, key])
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+def importOperad(key):
+  operad = readOperad(key)
+  print operad
+  
+  if not operadExists(key):
+    createOperad(key, operad["name"], operad["notation"])
+
+  updateOperad(key, operad)
+
 # actual execution code
 global connection
 (connection, cursor) = general.connect()
 
+files = os.listdir("../operads")
+for filename in files:
+  if filename.endswith(".json"):
+    importOperad(filename.split(".")[0])
 
-operad = readOperad("lie")
-print operad
-
-if not operadExists("lie"):
-  createOperad("lie", operad["name"], operad["notation"])
-
-updateOperad("lie", operad)
 
 general.close(connection)
