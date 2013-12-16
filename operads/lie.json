@@ -16,7 +16,7 @@
       { "relation": "[[x,y],z]=[x,[y,z]]+[[x,z],y]", "name": "Leibniz relation" }
     ],
 
-  "generating series": "\\log(1-t)",
+  "series": "$\\log(1-t)$",
   
   "dual": "Com",
 

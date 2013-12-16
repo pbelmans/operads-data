@@ -1,9 +1,9 @@
 {
-  "key": "Leibn",
+  "key": "Leib",
   "name": "Leibniz algebra",
   "notation": "\\mathrm{Leib}",
 
-  "generating series": "\\frac{t}{1-t}",
+  "series": "$\\frac{t}{1-t}$",
 
   "dual": "Zinb",
 

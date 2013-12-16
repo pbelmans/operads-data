@@ -3,7 +3,7 @@
   "name": "Commutative algebra",
   "notation": "\\mathrm{Com}",
 
-  "generating series": "\\exp(t)-1",
+  "series": "$\\exp(t)-1$",
 
   "dual": "Lie",
 

@@ -1,8 +1,8 @@
 import general
 import json, os, sqlite3
 
-# the list of all fields that correspond to columns in the operads table
-fields = ["dual"]
+# the list of all fields in the JSON that correspond to columns in the operads table
+fields = ["dual", "series"]
 
 
 # create an operad in the database
@@ -108,7 +108,22 @@ def updateOperad(key, operad):
   # TODO remove properties that no longer exist
 
   for field in fields:
-    setValue(key, field, operad[field])
+    if field in operad.keys() and not getValue(key, field) == operad[field]:
+      print "Updating the field ", field, " in ", key
+      setValue(key, field, operad[field])
+
+# generic code to get a value of a column in the operads table
+def getValue(key, field):
+  try:
+    query = "SELECT " + field + " FROM operads WHERE key = ?"
+    result = connection.execute(query, [key])
+
+    return result.fetchone()[0]
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+  return ""
 
 # generic code to change a column of an operad
 def setValue(key, field, value):
@@ -121,7 +136,6 @@ def setValue(key, field, value):
 
 def importOperad(filename):
   operad = readOperad(filename)
-  print operad
   
   if not operadExists(operad["key"]):
     createOperad(operad["key"], operad["name"], operad["notation"])

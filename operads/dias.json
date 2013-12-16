@@ -3,7 +3,7 @@
   "name": "Dissociative algebra",
   "notation": "\\mathrm{Dias}",
 
-  "generating series": "\\frac{t}{(1-t)^2}",
+  "series": "$\\frac{t}{(1-t)^2}$",
 
   "dual": "Dend",
 
