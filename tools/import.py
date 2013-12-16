@@ -35,7 +35,7 @@ def createProperty(name):
 
   try:
     query = "INSERT INTO properties (name) VALUES (?)"
-    cursor.execute(query, (name))
+    cursor.execute(query, (name,))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
@@ -48,7 +48,7 @@ def operadFile(key):
 def operadExists(key):
   try:
     query = "SELECT COUNT(*) FROM operads WHERE key = ?"
-    result = connection.execute(query, [key])
+    result = connection.execute(query, (key,))
 
     return result.fetchone()[0]
 
@@ -65,7 +65,7 @@ def operadFileExists(key):
 def operadHasProperty(key, name):
   try:
     query = "SELECT COUNT(*) FROM operad_property WHERE key = ? AND name = ?"
-    result = connection.execute(query, [key, name])
+    result = connection.execute(query, (key, name))
 
     return result.fetchone()[0]
 
@@ -78,7 +78,7 @@ def operadHasProperty(key, name):
 def propertyExists(name):
   try:
     query = "SELECT COUNT(*) FROM properties WHERE name = ?"
-    result = connection.execute(query, [name])
+    result = connection.execute(query, (name,))
 
     return result.fetchone()[0]
 
@@ -100,6 +100,9 @@ def readOperad(key):
 def updateOperad(key, operad):
   # update its properties
   for name in operad["properties"]:
+    if not propertyExists(name):
+      createProperty(name)
+
     if not operadHasProperty(key, name):
       print "Adding the property ", name, " to the operad with key ", key
       addProperty(key, name)
@@ -116,7 +119,7 @@ def updateOperad(key, operad):
 def getValue(key, field):
   try:
     query = "SELECT " + field + " FROM operads WHERE key = ?"
-    result = connection.execute(query, [key])
+    result = connection.execute(query, (key,))
 
     return result.fetchone()[0]
 
@@ -129,7 +132,7 @@ def getValue(key, field):
 def setValue(key, field, value):
   try:
     query = "UPDATE operads SET " + field + " = ? WHERE key = ?"
-    result = connection.execute(query, [value, key])
+    result = connection.execute(query, (value, key))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
