@@ -16,6 +16,8 @@
       { "relation": "[[x,y],z]=[x,[y,z]]+[[x,z],y]", "name": "Leibniz relation" }
     ],
 
+  "representation": "\\mathrm{Ind}_{\\mathrm{Cyc}_n}^{\\mathrm{Sym}_n}(\\sqrt[n]{1})",
+
   "series": "$\\log(1-t)$",
   
   "dual": "Com",

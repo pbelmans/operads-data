@@ -2,7 +2,7 @@ import general
 import json, os, sqlite3
 
 # the list of all fields in the JSON that correspond to columns in the operads table
-fields = ["dual", "series"]
+fields = ["dual", "representation", "series"]
 
 
 # create an operad in the database
