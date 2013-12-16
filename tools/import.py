@@ -2,7 +2,7 @@ import general
 import json, os, sqlite3
 
 # the list of all fields in the JSON that correspond to columns in the operads table
-fields = ["dual", "representation", "series"]
+fields = ["dual", "representation", "dimension", "series"]
 
 
 # create an operad in the database
@@ -114,6 +114,10 @@ def updateOperad(key, operad):
     if field in operad.keys() and not getValue(key, field) == operad[field]:
       print "Updating the field ", field, " in ", key
       setValue(key, field, operad[field])
+  # dimensions need a different way of handling
+  if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
+      print "Updating the field dimensions in ", key
+      setValue(key, "dimensions", str(operad["dimensions"]))
 
 # generic code to get a value of a column in the operads table
 def getValue(key, field):

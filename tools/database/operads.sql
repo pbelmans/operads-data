@@ -4,6 +4,8 @@ CREATE TABLE "operads" (
   "notation" VARCHAR NOT NULL,
   "dual" VARCHAR,
   "representation" VARCHAR,
+  "dimensions" VARCHAR,
+  "dimension" VARCHAR,
   "series" VARCHAR
 );
 
