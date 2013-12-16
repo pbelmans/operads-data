@@ -1,6 +1,7 @@
 {
+  "key": "Ass",
   "name": "Associative algebra",
-  "notation": "Ass",
+  "notation": "\\mathrm{Ass}",
 
   "generating series": "\\frac{t}{1-t}",
 

@@ -1,6 +1,7 @@
 {
+  "key": "Com",
   "name": "Commutative algebra",
-  "notation": "Com",
+  "notation": "\\mathrm{Com}",
 
   "generating series": "\\exp(t)-1",
 

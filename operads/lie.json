@@ -1,6 +1,7 @@
 {
+  "key": "Lie",
   "name": "Lie algebra",
-  "notation": "Lie",
+  "notation": "\\mathrm{Lie}",
 
   "operations":
     [

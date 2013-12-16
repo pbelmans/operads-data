@@ -1,6 +1,7 @@
 {
+  "key": "Leibn",
   "name": "Leibniz algebra",
-  "notation": "Leib",
+  "notation": "\\mathrm{Leib}",
 
   "generating series": "\\frac{t}{1-t}",
 

@@ -1,6 +1,7 @@
 {
+  "key": "Pois",
   "name": "Poisson algebra",
-  "notation": "Pois",
+  "notation": "\\mathrm{Pois}",
 
   "generating series": "\\frac{t}{1-t}",
 

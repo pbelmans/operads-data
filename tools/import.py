@@ -119,14 +119,14 @@ def setValue(key, field, value):
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
-def importOperad(key):
-  operad = readOperad(key)
+def importOperad(filename):
+  operad = readOperad(filename)
   print operad
   
-  if not operadExists(key):
-    createOperad(key, operad["name"], operad["notation"])
+  if not operadExists(operad["key"]):
+    createOperad(operad["key"], operad["name"], operad["notation"])
 
-  updateOperad(key, operad)
+  updateOperad(operad["key"], operad)
 
 # actual execution code
 global connection

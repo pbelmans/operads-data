@@ -1,6 +1,7 @@
 {
+  "key": "Zinb",
   "name": "Zinbiel algebra",
-  "notation": "Zinb",
+  "notation": "\\mathrm{Zinb}",
 
   "generating series": "\\frac{t}{1-t}",
 

@@ -1,6 +1,7 @@
 {
+  "key": "Dias",
   "name": "Dissociative algebra",
-  "notation": "Dias",
+  "notation": "\\mathrm{Dias}",
 
   "generating series": "\\frac{t}{(1-t)^2}",
 
