@@ -7,5 +7,7 @@
 
   "dual": "Lie",
 
-  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ]
+  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ],
+  
+  "unit": "$1x=x=x1$"
 }

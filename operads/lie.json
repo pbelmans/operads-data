@@ -24,5 +24,7 @@
   
   "dual": "Com",
 
-  "properties": [ "binary", "quadratic", "koszul" ]
+  "properties": [ "binary", "quadratic", "koszul" ],
+
+  "unit": "no"
 }

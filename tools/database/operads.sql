@@ -7,7 +7,6 @@ CREATE TABLE "operads" (
   "dimensions" VARCHAR,
   "dimension" VARCHAR,
   "dimension_expression" VARCHAR,
-  "series" VARCHAR
+  "series" VARCHAR,
+  "unit" VARCHAR
 );
-
-
