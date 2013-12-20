@@ -74,6 +74,18 @@ def operadHasProperty(key, name):
 
   return False
 
+def operadHasReference(key, citation_key):
+  try:
+    query = "SELECT COUNT(*) FROM operad_reference WHERE key = ? AND citation_key = ?"
+    result = connection.execute(query, (key, citation_key))
+
+    return result.fetchone()[0]
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+  return False
+
 # check whether a property exists in the database
 def propertyExists(name):
   try:
@@ -87,6 +99,33 @@ def propertyExists(name):
 
   return False
 
+# get all references associated to an operad
+def getReferences(key):
+  try:
+    query = "SELECT citation_key FROM operad_reference WHERE key = ?"
+    result = connection.execute(query, (key,))
+
+    result = result.fetchall()
+    for i in range(len(result)):
+      result[i] = result[i][0]
+    return result
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+  return []
+
+# remove a reference from an operad
+def removeReference(key, citation_key):
+  assert operadHasReference(key, citation_key)
+
+  try:
+    query = "DELETE FROM operad_reference WHERE key = ? AND citation_key = ?"
+    cursor.execute(query, (key, citation_key))
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
 # import an operad (represented as JSON data structure) from the filesystem
 def readOperad(key):
   assert operadFileExists(key)
@@ -95,6 +134,17 @@ def readOperad(key):
   operad = json.load(f)
 
   return operad
+
+# add a reference to an operad
+def addReference(key, citation_key):
+  assert not operadHasReference(key, citation_key)
+
+  try:
+    query = "INSERT INTO operad_reference (key, citation_key) VALUES (?, ?)"
+    cursor.execute(query, (key, citation_key))
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
 
 # update an operad
 def updateOperad(key, operad):
@@ -116,8 +166,23 @@ def updateOperad(key, operad):
       setValue(key, field, operad[field])
   # dimensions need a different way of handling
   if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
-      print "Updating the field dimensions in ", key
-      setValue(key, "dimensions", str(operad["dimensions"]))
+    print "Updating the field dimensions in ", key
+    setValue(key, "dimensions", str(operad["dimensions"]))
+  # references need a different way of handling
+  if "references" in operad.keys():
+    oldReferences = getReferences(key)
+
+    # checking which references have been removed
+    for reference in oldReferences:
+      if reference not in operad["references"]:
+        print "The reference ", reference, " has been removed from the operad with key ", key
+        removeReference(key, reference)
+
+    # checking which references are new and adding them
+    for reference in operad["references"]:
+      if not operadHasReference(key, reference):
+        print "Adding the reference ", reference, " to the operad with key ", key
+        addReference(key, reference)
 
 # generic code to get a value of a column in the operads table
 def getValue(key, field):
