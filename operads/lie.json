@@ -5,15 +5,15 @@
 
   "operations":
     [
-      { "operation": "[x,y]", "name": "bracket" }
+      { "operation": "[x,y]", "description": "bracket" }
     ],
-  "symmetry": 
+  "symmetries": 
     [
-      { "symmetry": "[x,y]=-[y,x]", "name": "antisymmetry" }
+      { "symmetry": "[x,y]=-[y,x]", "description": "antisymmetry" }
     ] ,
-  "relation":
+  "relations":
     [
-      { "relation": "[[x,y],z]=[x,[y,z]]+[[x,z],y]", "name": "Leibniz relation" }
+      { "relation": "[[x,y],z]=[x,[y,z]]+[[x,z],y]", "description": "Leibniz relation" }
     ],
 
   "representation": "\\mathrm{Ind}_{\\mathrm{Cyc}_n}^{\\mathrm{Sym}_n}(\\sqrt[n]{1})",

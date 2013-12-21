@@ -146,6 +146,33 @@ def addReference(key, citation_key):
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
+# check whether an operad already has a certain "expression" related to it
+def operadHasExpression(key, category, expression, description):
+  try:
+    query = "SELECT COUNT(*) FROM expressions WHERE key = ? AND category = ? AND expression = ? AND description = ?"
+    result = connection.execute(query, (key, category, expression, description))
+
+    return result.fetchone()[0]
+
+  except sqlite3.Error, e:
+    print query
+    print "An error occurred:", e.args[0]
+
+  return False
+
+# create an "expression", i.e. an operation, symmetry or relation
+def createExpression(key, category, expression, description):
+  assert not operadHasExpression(key, category, expression, description)
+  assert category in ["operation", "symmetry", "relation"]
+
+  try:
+    query = "INSERT INTO expressions (key, category, expression, description) VALUES (?, ?, ?, ?)"
+    cursor.execute(query, (key, category, expression, description))
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+
 # update an operad
 def updateOperad(key, operad):
   # update its properties
@@ -160,19 +187,21 @@ def updateOperad(key, operad):
     #  print "The operad with key ", key, " already has the property ", name
   # TODO remove properties that no longer exist
 
+  # general fields with a single value can be parsed this way
   for field in fields:
     if field in operad.keys() and not getValue(key, field) == operad[field]:
       print "Updating the field ", field, " in ", key
       setValue(key, field, operad[field])
+
   # dimensions need a different way of handling
   if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
     print "Updating the field dimensions in ", key
     setValue(key, "dimensions", str(operad["dimensions"]))
+
   # references need a different way of handling
   if "references" in operad.keys():
-    oldReferences = getReferences(key)
-
     # checking which references have been removed
+    oldReferences = getReferences(key)
     for reference in oldReferences:
       if reference not in operad["references"]:
         print "The reference ", reference, " has been removed from the operad with key ", key
@@ -183,6 +212,18 @@ def updateOperad(key, operad):
       if not operadHasReference(key, reference):
         print "Adding the reference ", reference, " to the operad with key ", key
         addReference(key, reference)
+
+  # expressions need a different way of handling
+  for category in [("operation", "operations"), ("symmetry", "symmetries"), ("relation", "relations")]:
+    if category[1] in operad.keys():
+      for expression in operad[category[1]]:
+        # checking which references have been removed
+        # TODO implement this
+
+        # checking which expressions are new and adding them
+        if not operadHasExpression(key, category[0], expression[category[0]], expression["description"]):
+          print "Adding the expression ", expression[category[0]], " of category ", category[0], " to the operad with key ", key
+          createExpression(key, category[0], expression[category[0]], expression["description"])
 
 # generic code to get a value of a column in the operads table
 def getValue(key, field):
