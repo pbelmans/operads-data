@@ -1,0 +1,12 @@
+{
+  "key": "dual-2as",
+  "name": "Dual two-associative algebra",
+  "notation": "2\\mathrm{-as}^!",
+
+  "dual": "2as",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul" ]
+}
+
+
+

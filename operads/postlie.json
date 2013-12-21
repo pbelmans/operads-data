@@ -1,0 +1,11 @@
+{
+  "key": "PostLie",
+  "name": "Post-Lie algebra",
+  "notation": "\\mathrm{PostLie}",
+
+  "dual": "ComTrias",
+
+  "properties": [ "binary", "quadratic", "koszul" ]
+}
+
+

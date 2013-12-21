@@ -1,0 +1,10 @@
+{
+  "key": "Perm",
+  "name": "Perm algebra",
+  "notation": "\\mathrm{Perm}",
+
+  "dual": "PreLie",
+
+  "properties": [ "binary", "quadratic", "koszul", "set-theoretic" ]
+}
+

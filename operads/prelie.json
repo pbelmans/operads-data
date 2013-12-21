@@ -1,0 +1,10 @@
+{
+  "key": "PreLie",
+  "name": "Pre-Lie algebra",
+  "notation": "\\mathrm{PreLie}",
+
+  "dual": "Perm",
+
+  "properties": [ "binary", "quadratic", "koszul" ]
+}
+

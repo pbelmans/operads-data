@@ -1,0 +1,10 @@
+{
+  "key": "ComTrias",
+  "name": "Commutative triassociative algebra",
+  "notation": "\\mathrm{ComTrias}",
+
+  "dual": "PostLie",
+
+  "properties": [ "binary", "quadratic", "koszul" ]
+}
+

@@ -1,0 +1,18 @@
+{
+  "key": "dual-Dipt",
+  "name": "Dual dipterous algebra",
+  "notation": "\\mathrm{Dipt}^!",
+
+  "representation": "k^2",
+  "dimensions": [1, 2, 2, 2, 2, 2, 2],
+  "dimension": "2",
+  "dimension_expression": "2",
+  "series": "$\\frac{t+t^2}{1-t}$",
+
+  "dual": "Dipt",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul" ]
+}
+
+
+

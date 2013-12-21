@@ -1,6 +1,6 @@
 {
   "key": "Dias",
-  "name": "Dissociative algebra",
+  "name": "Diassociative algebra",
   "notation": "\\mathrm{Dias}",
 
   "series": "$\\frac{t}{(1-t)^2}$",

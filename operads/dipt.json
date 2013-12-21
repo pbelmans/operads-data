@@ -1,0 +1,15 @@
+{
+  "key": "Dipt",
+  "name": "Dipterous algebra",
+  "notation": "\\mathrm{Dipt}",
+
+  "representation": "k[\\mathrm{PT}_n]\\otimes k[\\mathrm{PT}_n],n\\geq 2",
+  "dimensions": [1, 2, 6, 22, 90, 394, 1806],
+  "series": "$\\frac{1-t-\\sqrt{1-6t+t^2}}{2}$",
+
+  "dual": "dual-Dipt",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul" ]
+}
+
+

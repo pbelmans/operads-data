@@ -1,0 +1,12 @@
+{
+  "key": "Tridend",
+  "name": "Tridendriform algebra",
+  "notation": "\\mathrm{Tridend}",
+
+  "dual": "Trias",
+
+  "properties": [ "ns", "binary", "quadratic", "koszul" ]
+}
+
+
+
