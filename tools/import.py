@@ -1,4 +1,4 @@
-import general
+import general, oeis
 import json, os, sqlite3
 
 # the list of all fields in the JSON that correspond to columns in the operads table
@@ -195,6 +195,10 @@ def updateOperad(key, operad):
 
   # dimensions need a different way of handling
   if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
+    query = ",".join(str(n) for n in operad["dimensions"])
+    data = oeis.getData(query)
+    for key, sequence in oeis.getSequences(data).iteritems():
+      print key + ": " + sequence["name"]
     print "Updating the field dimensions in ", key
     setValue(key, "dimensions", str(operad["dimensions"]))
 
