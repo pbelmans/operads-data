@@ -197,8 +197,8 @@ def updateOperad(key, operad):
   if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
     query = ",".join(str(n) for n in operad["dimensions"])
     data = oeis.getData(query)
-    for key, sequence in oeis.getSequences(data).iteritems():
-      print key + ": " + sequence["name"]
+    for OEISkey, sequence in oeis.getSequences(data).iteritems():
+      print OEISkey + ": " + sequence["name"]
     print "Updating the field dimensions in ", key
     setValue(key, "dimensions", str(operad["dimensions"]))
 
