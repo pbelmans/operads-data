@@ -3,6 +3,12 @@
   "name": "Two-associative algebra",
   "notation": "2\\mathrm{-as}",
 
+  "representation": "k[\\mathrm{T}_n]\\oplus k[\\mathrm{T}_n]",
+  "dimensions": [1, 2, 6, 22, 90, 394, 1806],
+  "dimension": "2\\mathrm{C}_n",
+  "dimension_expression": "2*schroeder(n-1)",
+  "series": "$\\frac{1-t-\\sqrt{1-6t+t^2}}{2}$",
+
   "dual": "dual-2as",
 
   "properties": [ "ns", "binary", "quadratic", "koszul", "set-theoretic" ]

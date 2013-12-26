@@ -3,6 +3,12 @@
   "name": "Tridendriform algebra",
   "notation": "\\mathrm{Tridend}",
 
+  "representation": "k[\\mathrm{PT}_n]",
+  "dimensions": [1, 3, 11, 45, 197, 903],
+  "dimension": "\\mathrm{C}_n",
+  "dimension_expression": "schroeder(n)",
+  "series": "$\\frac{-1+3t-\\sqrt{1-6t+t^2}}{4t}$",
+
   "dual": "Trias",
 
   "properties": [ "ns", "binary", "quadratic", "koszul" ]
