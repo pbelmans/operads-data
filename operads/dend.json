@@ -3,7 +3,11 @@
   "name": "Dendriform algebra",
   "notation": "\\mathrm{Dend}",
 
-  "series": "",
+  "representation": "\\bigoplus_{n\\geq 1}k[\\mathrm{PBT}_{n+1}]\\otimes V^{\\otimes n}",
+  "dimensions": [1, 2, 5, 14, 42, 132, 429],
+  "dimension": "\\frac{1}{n+1}{2n\\choose n}",
+  "dimension_expression": "choose(2*n,n)/(n+1)",
+  "series": "$\\frac{1-2t-\\sqrt{1-4t}}{2t}=y$, $y^2-(1-2t)y+t=0$",
 
   "dual": "Dias",
 

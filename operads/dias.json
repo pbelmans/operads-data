@@ -3,6 +3,10 @@
   "name": "Diassociative algebra",
   "notation": "\\mathrm{Dias}",
 
+  "representation": "k^n",
+  "dimensions": [1, 2, 3, 4, 5, 6, 7],
+  "dimension": "n",
+  "dimension_expression": "n",
   "series": "$\\frac{t}{(1-t)^2}$",
 
   "dual": "Dend",

@@ -3,6 +3,11 @@
   "name": "Pre-Lie algebra",
   "notation": "\\mathrm{PreLie}",
 
+  "dimensions": [1, 2, 9, 64, 625, 1296, 117649],
+  "dimension": "n^{n-1}",
+  "dimension_expression": "n^(n-1)",
+  "series": "$y$ which satisfies $y=t\\exp(y)$",
+
   "dual": "Perm",
 
   "properties": [ "binary", "quadratic", "koszul" ]

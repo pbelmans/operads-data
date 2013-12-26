@@ -3,6 +3,10 @@
   "name": "Leibniz algebra",
   "notation": "\\mathrm{Leib}",
 
+  "representation": "k[\\mathrm{Sym}_n]",
+  "dimensions": [1, 2, 6, 24, 120, 720, 5040],
+  "dimension": "n!",
+  "dimension_expression": "n!",
   "series": "$\\frac{t}{1-t}$",
 
   "dual": "Zinb",
