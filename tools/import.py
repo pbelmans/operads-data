@@ -208,7 +208,7 @@ def updateOperad(key, operad):
     if len(candidates) == 0:
       print "There is no OEIS sequence matching these dimensions"
     elif len(candidates) == 1:
-      if getValue(key, "oeis") != candidates.keys()[9]:
+      if getValue(key, "oeis") != candidates.keys()[0]:
         print "There is one OEIS sequence matching these dimensions, adding it to ", key
         setValue(key, "oeis", candidates.keys()[0])
     else:
