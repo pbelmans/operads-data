@@ -195,12 +195,27 @@ def updateOperad(key, operad):
 
   # dimensions need a different way of handling
   if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
-    query = ",".join(str(n) for n in operad["dimensions"])
-    data = oeis.getData(query)
-    for OEISkey, sequence in oeis.getSequences(data).iteritems():
-      print OEISkey + ": " + sequence["name"]
     print "Updating the field dimensions in ", key
     setValue(key, "dimensions", str(operad["dimensions"]))
+
+  # handle references to OEIS
+  if "dimensions" in operad.keys() and len(operad["dimensions"]) == 7 and getValue(key, "oeis") == None:
+    query = ",".join(str(n) for n in operad["dimensions"])
+    data = oeis.getData(query)
+    print "looking for " + str(operad["dimensions"])
+    candidates = oeis.getSequences(data)
+
+    if len(candidates) == 0:
+      print "There is no OEIS sequence matching these dimensions"
+    elif len(candidates) == 1:
+      if getValue(key, "oeis") != candidates.keys()[9]:
+        print "There is one OEIS sequence matching these dimensions, adding it to ", key
+        setValue(key, "oeis", candidates.keys()[0])
+    else:
+      print "There are more candidates matching these dimensions"
+      for OEISkey, sequence in candidates.iteritems():
+        print "  ", OEISkey, ": ", sequence["name"]
+
 
   # references need a different way of handling
   if "references" in operad.keys():

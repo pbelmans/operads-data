@@ -5,6 +5,7 @@ CREATE TABLE "operads" (
   "dual" VARCHAR,
   "representation" VARCHAR,
   "dimensions" VARCHAR,
+  "oeis" VARCHAR,
   "dimension" VARCHAR,
   "dimension_expression" VARCHAR,
   "series" VARCHAR,
