@@ -1,3 +1,6 @@
 CREATE TABLE "properties" (
-  "name" VARCHAR PRIMARY KEY NOT NULL
+  "key" VARCHAR PRIMARY KEY NOT NULL,
+  "name" VARCHAR NOT NULL,
+  "slogan" VARCHAR,
+  "definition" VARCHAR
 )

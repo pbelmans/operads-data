@@ -30,12 +30,12 @@ def addProperty(key, name):
     print "An error occurred:", e.args[0]
 
 # create a property in the database
-def createProperty(name):
-  assert not propertyExists(name)
+def createProperty(key, name, slogan, definition):
+  assert not propertyExists(key)
 
   try:
-    query = "INSERT INTO properties (name) VALUES (?)"
-    cursor.execute(query, (name,))
+    query = "INSERT INTO properties (key, name, slogan, definition) VALUES (?, ?, ?, ?)"
+    cursor.execute(query, (key, name, slogan, definition))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
@@ -87,10 +87,10 @@ def operadHasReference(key, citation_key):
   return False
 
 # check whether a property exists in the database
-def propertyExists(name):
+def propertyExists(key):
   try:
-    query = "SELECT COUNT(*) FROM properties WHERE name = ?"
-    result = connection.execute(query, (name,))
+    query = "SELECT COUNT(*) FROM properties WHERE key = ?"
+    result = connection.execute(query, (key,))
 
     return result.fetchone()[0]
 
@@ -176,16 +176,12 @@ def createExpression(key, category, expression, description):
 # update an operad
 def updateOperad(key, operad):
   # update its properties
-  for name in operad["properties"]:
-    if not propertyExists(name):
-      createProperty(name)
-
-    if not operadHasProperty(key, name):
-      print "Adding the property ", name, " to the operad with key ", key
-      addProperty(key, name)
+  for propertyKey in operad["properties"]:
+    if not operadHasProperty(key, propertyKey):
+      print "Adding the property ", propertyKey, " to the operad with key ", key
+      addProperty(key, propertyKey)
     #else:
     #  print "The operad with key ", key, " already has the property ", name
-  # TODO remove properties that no longer exist
 
   # general fields with a single value can be parsed this way
   for field in fields:
@@ -274,9 +270,28 @@ def importOperad(filename):
 
   updateOperad(operad["key"], operad)
 
+def clearProperties():
+  try:
+    query = "DELETE FROM properties"
+    connection.execute(query)
+
+  except sqlite3.Error, e:
+    print "An error occurred:", e.args[0]
+
+def importProperties():
+  f = open("../properties.json")
+  properties = json.load(f)
+
+  for p in properties:
+    createProperty(p["key"], p["name"], p["slogan"], p["definition"])
+
+
 # actual execution code
 global connection
 (connection, cursor) = general.connect()
+
+clearProperties() # this is easier than checking whether they have been updated
+importProperties()
 
 files = os.listdir("../operads")
 for filename in files:
