@@ -6,36 +6,36 @@ fields = ["dual", "representation", "dimension", "dimension_expression", "series
 
 
 # create an operad in the database
-def createOperad(key, name, notation):
-  assert not operadExists(key)
+def createOperad(operadKey, name, notation):
+  assert not operadExists(operadKey)
 
-  print "Creating the operad with key ", key
+  print "Creating the operad with key ", operadKey
 
   try:
     query = "INSERT INTO operads (key, name, notation) VALUES (?, ?, ?)"
-    cursor.execute(query, (key, name, notation))
+    cursor.execute(query, (operadKey, name, notation))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
 # add a property to an operad
-def addProperty(key, name):
-  assert not operadHasProperty(key, name)
+def addProperty(operadKey, propertyKey):
+  assert not operadHasProperty(operadKey, propertyKey)
 
   try:
-    query = "INSERT INTO operad_property (key, name) VALUES (?, ?)"
-    cursor.execute(query, (key, name))
+    query = "INSERT INTO operad_property (operad, property) VALUES (?, ?)"
+    cursor.execute(query, (operadKey, propertyKey))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
 # create a property in the database
-def createProperty(key, name, slogan, definition):
-  assert not propertyExists(key)
+def createProperty(operadKey, propertyKey, slogan, definition):
+  assert not propertyExists(propertyKey)
 
   try:
     query = "INSERT INTO properties (key, name, slogan, definition) VALUES (?, ?, ?, ?)"
-    cursor.execute(query, (key, name, slogan, definition))
+    cursor.execute(query, (operadKey, propertyKey, slogan, definition))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
@@ -45,10 +45,10 @@ def operadFile(key):
   return "../operads/" + key + ".json"
 
 # check whether an operad exists in the database
-def operadExists(key):
+def operadExists(operadKey):
   try:
     query = "SELECT COUNT(*) FROM operads WHERE key = ?"
-    result = connection.execute(query, (key,))
+    result = connection.execute(query, (operadKey,))
 
     return result.fetchone()[0]
 
@@ -62,10 +62,10 @@ def operadFileExists(key):
   return os.path.isfile(operadFile(key))
 
 # check whether an operad has a property (i.e. whether there is an element in the operad_property table)
-def operadHasProperty(key, name):
+def operadHasProperty(operadKey, propertyKey):
   try:
-    query = "SELECT COUNT(*) FROM operad_property WHERE key = ? AND name = ?"
-    result = connection.execute(query, (key, name))
+    query = "SELECT COUNT(*) FROM operad_property WHERE operad = ? AND property = ?"
+    result = connection.execute(query, (operadKey, propertyKey))
 
     return result.fetchone()[0]
 
@@ -74,10 +74,10 @@ def operadHasProperty(key, name):
 
   return False
 
-def operadHasReference(key, citation_key):
+def operadHasReference(operadKey, citationKey):
   try:
     query = "SELECT COUNT(*) FROM operad_reference WHERE key = ? AND citation_key = ?"
-    result = connection.execute(query, (key, citation_key))
+    result = connection.execute(query, (operadKey, citationKey))
 
     return result.fetchone()[0]
 
@@ -87,10 +87,10 @@ def operadHasReference(key, citation_key):
   return False
 
 # check whether a property exists in the database
-def propertyExists(key):
+def propertyExists(propertyKey):
   try:
     query = "SELECT COUNT(*) FROM properties WHERE key = ?"
-    result = connection.execute(query, (key,))
+    result = connection.execute(query, (propertyKey,))
 
     return result.fetchone()[0]
 
@@ -100,10 +100,10 @@ def propertyExists(key):
   return False
 
 # get all references associated to an operad
-def getReferences(key):
+def getReferences(operadKey):
   try:
     query = "SELECT citation_key FROM operad_reference WHERE key = ?"
-    result = connection.execute(query, (key,))
+    result = connection.execute(query, (operadKey,))
 
     result = result.fetchall()
     for i in range(len(result)):
@@ -116,12 +116,12 @@ def getReferences(key):
   return []
 
 # remove a reference from an operad
-def removeReference(key, citation_key):
-  assert operadHasReference(key, citation_key)
+def removeReference(operadKey, citationKey):
+  assert operadHasReference(operadKey, citationKey)
 
   try:
     query = "DELETE FROM operad_reference WHERE key = ? AND citation_key = ?"
-    cursor.execute(query, (key, citation_key))
+    cursor.execute(query, (operadKey, citationKey))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
@@ -136,21 +136,21 @@ def readOperad(key):
   return operad
 
 # add a reference to an operad
-def addReference(key, citation_key):
-  assert not operadHasReference(key, citation_key)
+def addReference(operadKey, citationKey):
+  assert not operadHasReference(operadKey, citationKey)
 
   try:
     query = "INSERT INTO operad_reference (key, citation_key) VALUES (?, ?)"
-    cursor.execute(query, (key, citation_key))
+    cursor.execute(query, (operadKey, citationKey))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
 # check whether an operad already has a certain "expression" related to it
-def operadHasExpression(key, category, expression, description):
+def operadHasExpression(operadKey, category, expression, description):
   try:
     query = "SELECT COUNT(*) FROM expressions WHERE key = ? AND category = ? AND expression = ? AND description = ?"
-    result = connection.execute(query, (key, category, expression, description))
+    result = connection.execute(query, (operadKey, category, expression, description))
 
     return result.fetchone()[0]
 
@@ -161,41 +161,39 @@ def operadHasExpression(key, category, expression, description):
   return False
 
 # create an "expression", i.e. an operation, symmetry or relation
-def createExpression(key, category, expression, description):
-  assert not operadHasExpression(key, category, expression, description)
+def createExpression(operadKey, category, expression, description):
+  assert not operadHasExpression(operadKey, category, expression, description)
   assert category in ["operation", "symmetry", "relation"]
 
   try:
     query = "INSERT INTO expressions (key, category, expression, description) VALUES (?, ?, ?, ?)"
-    cursor.execute(query, (key, category, expression, description))
+    cursor.execute(query, (operadKey, category, expression, description))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]
 
 
 # update an operad
-def updateOperad(key, operad):
+def updateOperad(operadKey, operad):
   # update its properties
   for propertyKey in operad["properties"]:
-    if not operadHasProperty(key, propertyKey):
-      print "Adding the property ", propertyKey, " to the operad with key ", key
-      addProperty(key, propertyKey)
-    #else:
-    #  print "The operad with key ", key, " already has the property ", name
+    if not operadHasProperty(operadKey, propertyKey):
+      print "Adding the property ", propertyKey, " to the operad with key ", operadKey
+      addProperty(operadKey, propertyKey)
 
   # general fields with a single value can be parsed this way
   for field in fields:
-    if field in operad.keys() and not getValue(key, field) == operad[field]:
-      print "Updating the field ", field, " in ", key
-      setValue(key, field, operad[field])
+    if field in operad.keys() and not getValue(operadKey, field) == operad[field]:
+      print "Updating the field ", field, " in ", operadKey
+      setValue(operadKey, field, operad[field])
 
   # dimensions need a different way of handling
-  if "dimensions" in operad.keys() and not getValue(key, "dimensions") == str(operad["dimensions"]):
-    print "Updating the field dimensions in ", key
-    setValue(key, "dimensions", str(operad["dimensions"]))
+  if "dimensions" in operad.keys() and not getValue(operadKey, "dimensions") == str(operad["dimensions"]):
+    print "Updating the field dimensions in ", operadKey
+    setValue(operadKey, "dimensions", str(operad["dimensions"]))
 
   # handle references to OEIS
-  if "dimensions" in operad.keys() and len(operad["dimensions"]) == 7 and getValue(key, "oeis") == None:
+  if "dimensions" in operad.keys() and len(operad["dimensions"]) == 7 and getValue(operadKey, "oeis") == None:
     query = ",".join(str(n) for n in operad["dimensions"])
     data = oeis.getData(query)
     print "looking for " + str(operad["dimensions"])
@@ -204,9 +202,9 @@ def updateOperad(key, operad):
     if len(candidates) == 0:
       print "There is no OEIS sequence matching these dimensions"
     elif len(candidates) == 1:
-      if getValue(key, "oeis") != candidates.keys()[0]:
-        print "There is one OEIS sequence matching these dimensions, adding it to ", key
-        setValue(key, "oeis", candidates.keys()[0])
+      if getValue(operadKey, "oeis") != candidates.keys()[0]:
+        print "There is one OEIS sequence matching these dimensions, adding it to ", operadKey
+        setValue(operadKey, "oeis", candidates.keys()[0])
     else:
       print "There are more candidates matching these dimensions"
       for OEISkey, sequence in candidates.iteritems():
@@ -216,17 +214,17 @@ def updateOperad(key, operad):
   # references need a different way of handling
   if "references" in operad.keys():
     # checking which references have been removed
-    oldReferences = getReferences(key)
+    oldReferences = getReferences(operadKey)
     for reference in oldReferences:
       if reference not in operad["references"]:
-        print "The reference ", reference, " has been removed from the operad with key ", key
-        removeReference(key, reference)
+        print "The reference ", reference, " has been removed from the operad with key ", operadKey
+        removeReference(operadKey, reference)
 
     # checking which references are new and adding them
     for reference in operad["references"]:
-      if not operadHasReference(key, reference):
-        print "Adding the reference ", reference, " to the operad with key ", key
-        addReference(key, reference)
+      if not operadHasReference(operadKey, reference):
+        print "Adding the reference ", reference, " to the operad with key ", operadKey
+        addReference(operadKey, reference)
 
   # expressions need a different way of handling
   for category in [("operation", "operations"), ("symmetry", "symmetries"), ("relation", "relations")]:
@@ -236,15 +234,15 @@ def updateOperad(key, operad):
         # TODO implement this
 
         # checking which expressions are new and adding them
-        if not operadHasExpression(key, category[0], expression[category[0]], expression["description"]):
-          print "Adding the expression ", expression[category[0]], " of category ", category[0], " to the operad with key ", key
-          createExpression(key, category[0], expression[category[0]], expression["description"])
+        if not operadHasExpression(operadKey, category[0], expression[category[0]], expression["description"]):
+          print "Adding the expression ", expression[category[0]], " of category ", category[0], " to the operad with key ", operadKey
+          createExpression(operadKey, category[0], expression[category[0]], expression["description"])
 
 # generic code to get a value of a column in the operads table
-def getValue(key, field):
+def getValue(operadKey, field):
   try:
     query = "SELECT " + field + " FROM operads WHERE key = ?"
-    result = connection.execute(query, (key,))
+    result = connection.execute(query, (operadKey,))
 
     return result.fetchone()[0]
 
@@ -254,10 +252,10 @@ def getValue(key, field):
   return ""
 
 # generic code to change a column of an operad
-def setValue(key, field, value):
+def setValue(operadKey, field, value):
   try:
     query = "UPDATE operads SET " + field + " = ? WHERE key = ?"
-    result = connection.execute(query, (value, key))
+    result = connection.execute(query, (value, operadKey))
 
   except sqlite3.Error, e:
     print "An error occurred:", e.args[0]

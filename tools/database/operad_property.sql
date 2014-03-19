@@ -1,4 +1,4 @@
 CREATE TABLE "operad_property" (
-  "name" VARCHAR NOT NULL,
-  "key" VARCHAR NOT NULL
+  "operad" VARCHAR NOT NULL,
+  "property" VARCHAR NOT NULL
 )
